@@ -18,6 +18,13 @@ resource "google_compute_instance" "proxy_instance" {
     access_config = {
     }
   }
+
+  labels = {
+    deployment = "${var.deployment_name}",
+    service = "proxy"
+  }
+
+  tags = [ "proxy" ]
 }
 
 resource "google_compute_instance" "bastion_instance" {
@@ -35,9 +42,16 @@ resource "google_compute_instance" "bastion_instance" {
     access_config = {
     }
   }
+
+  labels = {
+    deployment = "${var.deployment_name}",
+    service = "bastion"
+  }
+
+  tags = [ "bastion" ]
 }
 
-// Public-facing Instances ====================================================
+// Private Instances ===========================================================
 resource "google_compute_instance" "application_instance" {
   name         = "${var.deployment_name}-application-instance"
   machine_type = "${var.application_instance_size}"
@@ -52,5 +66,10 @@ resource "google_compute_instance" "application_instance" {
     subnetwork = "${google_compute_subnetwork.deployment_subnetwork_private.self_link}"
     access_config = {
     }
+  }
+
+  labels = {
+    deployment = "${var.deployment_name}",
+    service = "product"
   }
 }
