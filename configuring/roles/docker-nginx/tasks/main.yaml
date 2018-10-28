@@ -1,0 +1,37 @@
+---
+- name: Ensuring Docker Nginx image is present
+  docker_image:
+    name: nginx
+    tag: 1.15.5
+    pull: yes
+
+- name: Ensuring /etc/nginx is present
+  file:
+    path: /etc/nginx
+    state: directory
+    mode: 0755
+
+- name: Ensuring /etc/nginx/conf.d is present
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+    mode: 0755
+
+- name: Uploading /etc/nginx/nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+
+- name: Spinning up Docker Nginx container
+  docker_container:
+    name: proxy
+    image: nginx
+    state: started
+    recreate: yes
+    restart_policy: always
+    published_ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/nginx:/etc/nginx
