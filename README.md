@@ -34,29 +34,28 @@ Not Available.
 
 ### GCP Create
 
-With `invoke`:
+Set up environment variables:
 ```
 export TF_VAR_deployment_name="<deployment_name>"
 export TF_VAR_gcp_project_id="<gcp_project_id>"
 export TF_VAR_gcp_credentials_path="<gcp_credentials_path>"
 export TF_VAR_gcp_region="<gcp_region>"
+export TF_VAR_ssh_user="<your ssh username>"
+export TF_VAR_ssh_pub_key_path="<path to your PUBLIC key file>"
+```
 
+Start the SSH agent, and load the private key used for this deployment
+```
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/google_compute_engine
+```
+
+Deploy with `invoke`:
+```
 invoke deploy-gcp
 ```
 
-Without `invoke`:
-```
-export TF_VAR_deployment_name="<deployment_name>"
-export TF_VAR_gcp_project_id="<gcp_project_id>"
-export TF_VAR_gcp_credentials_path="<gcp_credentials_path>"
-export TF_VAR_gcp_region="<gcp_region>"
-
-cd provisioning/gcp
-terraform apply
-```
-
 ### GCP Destroy
-
 
 
 
