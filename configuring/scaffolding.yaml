@@ -1,6 +1,6 @@
 ---
 - name: Set up Docker and Nginx on proxy server
-  hosts: proxy
+  hosts: proxy_private
   become: yes
   roles:
     - docker

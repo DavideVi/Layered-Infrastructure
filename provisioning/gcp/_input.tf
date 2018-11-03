@@ -1,29 +1,36 @@
-
 // Customisation Options =======================================================
 variable "deployment_name" {
-    type = "string"
+  type = "string"
+}
+
+variable "ssh_user" {
+  type = "string"
+}
+
+variable "ssh_pub_key_path" {
+  type = "string"
 }
 
 // Provisioner =================================================================
 variable "gcp_credentials_path" {
-    type = "string"
+  type = "string"
 }
 
 variable "gcp_project_id" {
-    type = "string"
+  type = "string"
 }
 
 variable "gcp_region" {
-    type = "string"
+  type = "string"
 }
 
 // Feature Toggle & Sizing Options =============================================
 variable "proxy_instance_size" {
-    type = "string"
-    default = "f1-micro"
+  type    = "string"
+  default = "f1-micro"
 }
 
 variable "application_instance_size" {
-    type = "string"
-    default = "f1-micro"
+  type    = "string"
+  default = "f1-micro"
 }
