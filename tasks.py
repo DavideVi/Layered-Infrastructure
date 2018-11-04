@@ -40,6 +40,13 @@ def deploy_gcp(context):
         sources=ANSIBLE_PLAYBOOKS))
 
 
+@task
+def destroy_gcp(context):
+
+    context.run("cd {sources}/gcp && terraform destroy".format(
+        sources=TERRAFORM_SOURCES))
+
+
 def check_vars_set():
     """
         Checks if required environment variables are set

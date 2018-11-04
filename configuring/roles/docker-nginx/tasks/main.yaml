@@ -17,20 +17,20 @@
     state: directory
     mode: 0755
 
-- name: Uploading /etc/nginx/nginx.conf
+- name: Ensuring /etc/nginx/nginx.conf exists
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     mode: 0644
 
-- name: Spinning up Docker Nginx container
+- name: Ensuring Docker Nginx container is running
   docker_container:
     name: proxy
     image: nginx
     state: started
     recreate: yes
     restart_policy: always
-    network_mode: host
+    network_mode: bridge
     published_ports:
       - 0.0.0.0:80:80
       - 0.0.0.0:443:443
