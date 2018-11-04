@@ -13,18 +13,21 @@ resource "google_compute_instance" "proxy_instance" {
     }
   }
 
+  metadata {
+    sshKeys = "${var.ssh_user}:${file(var.ssh_pub_key_path)}"
+  }
+
   network_interface {
-    subnetwork = "${google_compute_subnetwork.deployment_subnetwork_public.self_link}"
-    access_config = {
-    }
+    subnetwork    = "${google_compute_subnetwork.deployment_subnetwork_public.self_link}"
+    access_config = {}
   }
 
   labels = {
-    deployment = "${var.deployment_name}",
-    service = "proxy"
+    deployment = "${var.deployment_name}"
+    service    = "proxy"
   }
 
-  tags = [ "proxy" ]
+  tags = ["proxy"]
 }
 
 resource "google_compute_instance" "bastion_instance" {
@@ -37,18 +40,21 @@ resource "google_compute_instance" "bastion_instance" {
     }
   }
 
+  metadata {
+    sshKeys = "${var.ssh_user}:${file(var.ssh_pub_key_path)}"
+  }
+
   network_interface {
-    subnetwork = "${google_compute_subnetwork.deployment_subnetwork_public.self_link}"
-    access_config = {
-    }
+    subnetwork    = "${google_compute_subnetwork.deployment_subnetwork_public.self_link}"
+    access_config = {}
   }
 
   labels = {
-    deployment = "${var.deployment_name}",
-    service = "bastion"
+    deployment = "${var.deployment_name}"
+    service    = "bastion"
   }
 
-  tags = [ "bastion" ]
+  tags = ["bastion"]
 }
 
 // Private Instances ===========================================================
@@ -62,14 +68,17 @@ resource "google_compute_instance" "application_instance" {
     }
   }
 
+  metadata {
+    sshKeys = "${var.ssh_user}:${file(var.ssh_pub_key_path)}"
+  }
+
   network_interface {
-    subnetwork = "${google_compute_subnetwork.deployment_subnetwork_private.self_link}"
-    access_config = {
-    }
+    subnetwork    = "${google_compute_subnetwork.deployment_subnetwork_private.self_link}"
+    access_config = {}
   }
 
   labels = {
-    deployment = "${var.deployment_name}",
-    service = "product"
+    deployment = "${var.deployment_name}"
+    service    = "product"
   }
 }
