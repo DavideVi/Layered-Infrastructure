@@ -3,11 +3,20 @@ variable "deployment_name" {
   type = "string"
 }
 
+variable "deployment_type" {
+  type    = "string"
+  default = "dev"
+}
+
 variable "ssh_user" {
   type = "string"
 }
 
 variable "ssh_pub_key_path" {
+  type = "string"
+}
+
+variable "dns_zone" {
   type = "string"
 }
 
